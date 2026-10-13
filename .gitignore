@@ -1,0 +1,16 @@
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies and caches
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
