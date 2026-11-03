@@ -1,0 +1,29 @@
+@startuml
+!pragma layout smetana
+left to right direction
+actor "市民" as user
+actor "运营管理员" as admin
+actor "商户" as merchant
+rectangle "绿色出行积分系统 第一轮" {
+  usecase "登录与退出" as login
+  usecase "上报模拟行程" as report
+  usecase "查询本人行程" as trips
+  usecase "查询积分与流水" as points
+  usecase "浏览上架商品" as products
+  usecase "查看全部商品与规则" as operations
+  usecase "查看本店商品与规则" as store
+}
+user --> login
+admin --> login
+merchant --> login
+user --> report
+user --> trips
+user --> points
+user --> products
+admin --> operations
+merchant --> store
+note bottom of report
+  成功后保存行程并奖励积分。
+  重复请求不得再次发分。
+end note
+@enduml

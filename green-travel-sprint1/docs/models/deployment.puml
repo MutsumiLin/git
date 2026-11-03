@@ -1,0 +1,18 @@
+@startuml
+!pragma layout smetana
+node "开发电脑" {
+  node "浏览器" {
+    artifact "Vue页面" as App
+  }
+  node "Vite开发服务器 5173" as Web
+  node "Java21 SpringBoot 8080" as API
+  database "MySQL8.4 3306" as DB
+}
+App --> Web : HTTP
+Web --> API : /api同源代理
+API --> DB : JDBC事务
+note bottom of DB
+  MySQL业务库和测试库分开。
+  可选H2体验模式不作为MySQL验收结果。
+end note
+@enduml
