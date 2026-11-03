@@ -1,0 +1,26 @@
+@startuml
+!pragma layout smetana
+package "frontend Vue" as UI
+package identity
+package trip
+package points
+package mall
+package demo
+package common
+database MySQL
+UI --> identity : 登录与会话
+UI --> trip : 行程与规则接口
+UI --> points : 余额与流水接口
+UI --> mall : 商品接口
+identity ..> points : UserProvisioned
+trip ..> points : TripAccepted
+trip --> MySQL
+points --> MySQL
+mall --> MySQL
+identity --> MySQL
+demo --> identity
+demo --> MySQL : 可选演示夹具
+identity --> common
+trip --> common
+mall --> common
+@enduml
