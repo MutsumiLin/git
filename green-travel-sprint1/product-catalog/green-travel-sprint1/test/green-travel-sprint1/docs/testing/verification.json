@@ -1,0 +1,127 @@
+{
+  "preparedFor": "软件工程实验第一轮 六人集成基线",
+  "executionDate": "2026-10-20",
+  "executor": "Codex 辅助会话 实际运行；六人的人工验收另填",
+  "environment": {
+    "jdk": "Temurin 21.0.12.1",
+    "maven": "3.9.16",
+    "node": "24.15.0",
+    "mysql": "8.4.11",
+    "browser": "本机 Chrome 无头浏览器"
+  },
+  "mysql": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "build": "PASS"
+  },
+  "h2ViaOfficialMavenWrapper": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "build": "PASS"
+  },
+  "frontend": {
+    "unitTests": 5,
+    "failures": 0,
+    "productionBuild": "PASS"
+  },
+  "http": [
+    {
+      "name": "健康检查和未登录边界",
+      "result": "PASS"
+    },
+    {
+      "name": "公交十公里保存行程并发放一百二十分",
+      "result": "PASS"
+    },
+    {
+      "name": "同一请求返回原行程且不重复发分",
+      "result": "PASS"
+    },
+    {
+      "name": "同编号修改内容产生冲突",
+      "result": "PASS"
+    },
+    {
+      "name": "缺少 CSRF 信息时无法上报",
+      "result": "PASS"
+    },
+    {
+      "name": "商品浏览只展示上架商品",
+      "result": "PASS"
+    },
+    {
+      "name": "他人无法读取本人的行程",
+      "result": "PASS"
+    },
+    {
+      "name": "普通用户不能访问运营后台",
+      "result": "PASS"
+    },
+    {
+      "name": "运营可以读取全部商品",
+      "result": "PASS"
+    },
+    {
+      "name": "商户只能读取本店商品",
+      "result": "PASS"
+    },
+    {
+      "name": "积分流水对应本次行程",
+      "result": "PASS"
+    }
+  ],
+  "restart": [
+    {
+      "name": "后端重启后行程与积分仍存在",
+      "result": "PASS"
+    },
+    {
+      "name": "后端重启后同编号仍然幂等",
+      "result": "PASS"
+    }
+  ],
+  "browser": [
+    {
+      "name": "Vue 登录、骑行上报、200 分奖励与页面刷新",
+      "result": "PASS"
+    },
+    {
+      "name": "行程、积分流水、商城列表与详情路由",
+      "result": "PASS"
+    },
+    {
+      "name": "用户不能停留在后台路由",
+      "result": "PASS"
+    },
+    {
+      "name": "390 像素移动端页面无横向溢出",
+      "result": "PASS"
+    },
+    {
+      "name": "operator 工作台显示真实授权商品",
+      "result": "PASS"
+    },
+    {
+      "name": "merchant 工作台显示真实授权商品",
+      "result": "PASS"
+    },
+    {
+      "name": "全部已访问页面无 JavaScript 运行异常",
+      "result": "PASS"
+    }
+  ],
+  "uml": {
+    "plantuml": "1.2026.9",
+    "validatedSources": 8,
+    "exportedImages": 8
+  },
+  "githubActions": {
+    "configured": true,
+    "executedOnGithub": false
+  },
+  "scope": "不包含下一轮兑换、核销、清算功能的完成或通过结论"
+}

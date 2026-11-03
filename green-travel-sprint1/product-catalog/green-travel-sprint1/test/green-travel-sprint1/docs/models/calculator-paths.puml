@@ -1,0 +1,26 @@
+@startuml
+!pragma layout smetana
+start
+if (distance为空?) then (是)
+  :拒绝 P1;
+  stop
+endif
+if (小数位数大于2?) then (是)
+  :拒绝 P2;
+  stop
+endif
+if (distance小于0.01?) then (是)
+  :拒绝 P3;
+  stop
+endif
+if (distance大于100.00?) then (是)
+  :拒绝 P4;
+  stop
+endif
+if (mode为空?) then (是)
+  :拒绝 P5;
+  stop
+endif
+:精确计算减排量及向下取整积分 P6;
+stop
+@enduml
