@@ -1,7 +1,0 @@
-backend/src/main/java/edu/green/mall/CatalogController.java
-backend/src/main/java/edu/green/mall/CatalogRepository.java
-backend/src/main/java/edu/green/mall/ProductView.java
-backend/src/main/resources/db/migration/V3__product_catalog.sql
-backend/src/test/java/edu/green/mall/CatalogAccessTest.java
-docs/members/E-files.txt
-docs/members/E.md
