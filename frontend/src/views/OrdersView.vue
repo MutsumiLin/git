@@ -1,0 +1,11 @@
+<script setup>
+import {onMounted,ref} from 'vue'
+import {api} from '../api/client.js'
+import {dateTime} from '../utils/format.js'
+const records=ref(null),page=ref(0),busy=ref(false),error=ref(''),confirmId=ref(null)
+const names={PENDING:'待核销',REDEEMED:'已核销',CANCELLED:'已取消'}
+async function load(next=page.value){busy.value=true;error.value='';try{records.value=await api.orders(next);page.value=next}catch(e){error.value=e.message}finally{busy.value=false}}
+async function cancel(id){busy.value=true;error.value='';try{await api.cancelOrder(id);confirmId.value=null;await load()}catch(e){error.value=e.message}finally{busy.value=false}}
+onMounted(()=>load())
+</script>
+<template><div class="page-title"><div><span class="eyebrow">每一份绿色回馈</span><h1>我的兑换</h1><p>到对应商户出示核销码领取商品。待核销订单可取消，积分与库存将退回。</p></div><button class="button secondary" :disabled="busy" @click="load()">刷新</button></div><p v-if="error" class="notice error" role="alert">{{error}}</p><div v-if="!records?.items.length" class="card empty-state">{{busy?'正在读取…':'尚无兑换订单'}}</div><section class="orders-grid"><article v-for="o in records?.items" :key="o.id" class="card order-card"><div class="section-heading"><h2>{{o.productName}}</h2><span class="pill">{{names[o.status]}}</span></div><p class="muted small">订单 #{{o.id}} · {{dateTime(o.createdAt)}}</p><dl class="detail-list"><div><dt>兑换数量</dt><dd>{{o.quantity}}</dd></div><div><dt>消费积分</dt><dd>{{o.totalPoints}} 分</dd></div><div><dt>商户编号</dt><dd>#{{o.merchantId}}</dd></div></dl><template v-if="o.status==='PENDING'"><label>向商户出示的核销码</label><code class="voucher-code">{{o.verifyCode}}</code><button v-if="confirmId!==o.id" class="button secondary full" :disabled="busy" @click="confirmId=o.id">取消此兑换</button><div v-else class="action-row"><button class="button primary" :disabled="busy" @click="cancel(o.id)">确认取消并退分</button><button class="button secondary" @click="confirmId=null">保留订单</button></div></template><p v-else class="muted small">{{o.status==='CANCELLED'?'已退回消费积分并恢复库存':'核销时间 '+dateTime(o.redeemedAt)}}</p></article></section><div class="pagination"><button class="button secondary" :disabled="busy||page===0" @click="load(page-1)">上一页</button><span>第 {{page+1}} 页</span><button class="button secondary" :disabled="busy||!records||(page+1)*records.size>=records.total" @click="load(page+1)">下一页</button></div></template>

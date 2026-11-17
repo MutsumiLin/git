@@ -1,0 +1,15 @@
+docs/members/sprint2/B-files.txt
+docs/members/sprint2/B.md
+docs/prototype/sprint2/citizen-catalog.png
+docs/prototype/sprint2/citizen-mobile.png
+docs/prototype/sprint2/citizen-orders.png
+docs/prototype/sprint2/citizen-wallet.png
+frontend/package-lock.json
+frontend/package.json
+frontend/src/api/client.js
+frontend/src/router.js
+frontend/src/styles/base.css
+frontend/src/views/CatalogView.vue
+frontend/src/views/DashboardView.vue
+frontend/src/views/OrdersView.vue
+frontend/src/views/WalletView.vue
