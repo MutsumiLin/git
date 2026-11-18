@@ -1,6 +1,6 @@
 ## 本人据实补充
 
-- 姓名、日期、分支与PR链接：邱果果，2026-11-18，feat/c-workspace-sprint2，PR：待创建。
+- 姓名、日期、分支与PR链接：邱果果，2026-11-18，feat/c-workspace-sprint2，PR：https://github.com/MutsumiLin/git/pull/7
 - 阅读并能解释的代码及设计：我阅读了 WorkspaceView、ProductEditor、RulesPanel 和 FulfillmentPanel，能够说明角色工作台、商品维护、规则发布和兑换券核销的流程。
 - 实际修改、原因和commit：合并第二轮 C 的前端工作台增量，增加商品编辑、积分规则发布和订单核销功能；commit 待提交。
 - 本人运行的检查与结果：在 frontend 执行 npm run build，Vite 构建成功，共转换 45 个模块；operator 和 merchant 浏览器验收按要求记录实际结果。
