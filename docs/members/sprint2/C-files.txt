@@ -1,0 +1,14 @@
+docs/members/sprint2/C-files.txt
+docs/members/sprint2/C.md
+docs/prototype/SPRINT2.md
+docs/prototype/sprint2/admin-products.png
+docs/prototype/sprint2/admin-rules.png
+docs/prototype/sprint2/merchant-product-edit.png
+docs/prototype/sprint2/merchant-verification.png
+frontend/src/api/workspace.js
+frontend/src/components/AppShell.vue
+frontend/src/components/FulfillmentPanel.vue
+frontend/src/components/IterationScope.vue
+frontend/src/components/ProductEditor.vue
+frontend/src/components/RulesPanel.vue
+frontend/src/views/WorkspaceView.vue
