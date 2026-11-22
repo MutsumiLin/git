@@ -1,0 +1,25 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+actor 市民
+boundary "CatalogView" as UI
+control "RedemptionService" as S
+entity "账户与商品" as DB
+control "积分监听器" as P
+市民 -> UI : 确认商品 单价 数量
+UI -> S : 编号 商品 数量 确认单价
+activate S
+S -> DB : 锁账户 查询幂等
+alt 原编号已存在
+ S --> UI : 原订单状态
+else 首次请求
+ S -> DB : 锁商品 校验价格库存余额
+ S -> DB : 写订单快照 扣库存
+ S -> P : 同步RedemptionChanged
+ P -> DB : 扣分 写唯一账本
+ S -> DB : 共同提交 或异常共同回滚
+ S --> UI : 订单与随机核销码
+end
+deactivate S
+@enduml
