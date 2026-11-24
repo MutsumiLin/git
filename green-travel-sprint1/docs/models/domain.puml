@@ -1,0 +1,61 @@
+@startuml
+!pragma layout smetana
+hide methods
+class UserAccount {
+  id
+  username
+  role
+  merchantId
+}
+class Merchant {
+  id
+  name
+}
+class PointAccount {
+  userId
+  balance
+}
+class PointLedger {
+  id
+  userId
+  bizType
+  bizId
+  delta
+  balanceAfter
+}
+class TripRecord {
+  id
+  clientTripId
+  mode
+  distanceKm
+  savedCarbonKg
+  earnedPoints
+}
+class CarbonRule {
+  id
+  versionName
+  carFactor
+  busFactor
+  metroFactor
+  bikeFactor
+  pointsPerKg
+}
+class Product {
+  id
+  merchantId
+  pointsPrice
+  stock
+  status
+}
+Merchant "0..1" -- "0..*" UserAccount
+Merchant "1" -- "0..*" Product
+UserAccount "1" -- "0..1" PointAccount : 市民建立账户
+UserAccount "1" -- "0..*" TripRecord
+PointAccount "1" -- "0..*" PointLedger
+CarbonRule "1" -- "0..*" TripRecord : 保留参数快照
+TripRecord "1" .. "1" PointLedger : TRIP_REWARD业务引用
+note bottom of PointLedger
+  bizId 是业务引用，由应用校验。
+  此处虚线不代表数据库普通外键。
+end note
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+actor 运营
+boundary RulesPanel
+control RuleController
+entity carbon_rule_version
+entity trip_record
+运营 -> RulesPanel : 输入新的模拟系数
+RulesPanel -> RuleController : 携带Session CSRF发布
+RuleController -> carbon_rule_version : 校验后插入不可变新版本
+RuleController --> RulesPanel : 成功或重名冲突
+note over trip_record
+ 历史行程保留规则外键和参数快照
+ 新版本不修改已发积分
+end note
+@enduml
