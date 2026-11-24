@@ -1,0 +1,19 @@
+package edu.green.integration;
+import edu.green.TestSupport;
+import org.junit.jupiter.api.Test;
+import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+class OperationsFlowTest extends TestSupport {
+ private Map<String,Object> product(long merchant){return Map.of("merchantId",merchant,"sku","TEST-"+UUID.randomUUID().toString().substring(0,8).toUpperCase(),"name","测试商品","description","测试商品说明","category","测试","pointsPrice",120,"stock",2,"status","DRAFT");}
+ @Test void merchantCannotEditOtherMerchantsProduct()throws Exception{var s=login("merchant2");long id=jdbc.queryForObject("SELECT id FROM product WHERE sku='ECO-BAG'",Long.class);mvc.perform(put("/api/merchant/products/"+id).session(s.http()).header(s.header(),s.token()).contentType("application/json").content(json.writeValueAsBytes(product(jdbc.queryForObject("SELECT merchant_id FROM sys_user WHERE username='merchant2'",Long.class))))).andExpect(status().isNotFound());}
+ @Test void outdatedEditorCannotRestoreSoldStock()throws Exception{
+  var u=login("citizen");report(u,trip(UUID.randomUUID().toString(),"BIKE","100.00"),201);var m=login("merchant");long id=jdbc.queryForObject("SELECT id FROM product WHERE sku='ECO-BAG'",Long.class);long merchant=jdbc.queryForObject("SELECT merchant_id FROM product WHERE id=?",Long.class,id);
+  mvc.perform(post("/api/me/redemptions").session(u.http()).header(u.header(),u.token()).contentType("application/json").content(json.writeValueAsBytes(Map.of("clientRequestId",UUID.randomUUID().toString(),"productId",id,"quantity",1,"expectedPointsPrice",100)))).andExpect(status().isCreated());
+  var stale=new HashMap<>(product(merchant));stale.put("sku","ECO-BAG");stale.put("stock",20);stale.put("revision",0);
+  mvc.perform(put("/api/merchant/products/"+id).session(m.http()).header(m.header(),m.token()).contentType("application/json").content(json.writeValueAsBytes(stale))).andExpect(status().isConflict());assertEquals(19,jdbc.queryForObject("SELECT stock FROM product WHERE id=?",Integer.class,id));
+ }
+ @Test void rulePublishChangesNewTripsButNotHistoricalRewards()throws Exception{var s=login("citizen");report(s,trip(UUID.randomUUID().toString(),"BUS","10.00"),201);var a=login("operator");mvc.perform(post("/api/admin/carbon-rules").session(a.http()).header(a.header(),a.token()).contentType("application/json").content(json.writeValueAsBytes(Map.of("versionName","test-v2","carFactor","0.2","busFactor","0.1","metroFactor","0.05","bikeFactor","0","pointsPerKg",100)))).andExpect(status().isOk());report(s,trip(UUID.randomUUID().toString(),"BUS","10.00"),201);assertEquals(220,balance("citizen"));assertEquals(1,jdbc.queryForObject("SELECT COUNT(*) FROM trip_record WHERE earned_points=120",Integer.class));assertEquals(1,jdbc.queryForObject("SELECT COUNT(*) FROM trip_record WHERE earned_points=100",Integer.class));}
+ @Test void newDraftCanBePublishedAndBrowsed()throws Exception{var a=login("operator");long merchant=jdbc.queryForObject("SELECT merchant_id FROM sys_user WHERE username='merchant'",Long.class);var p=new HashMap<>(product(merchant));var r=mvc.perform(post("/api/admin/products").session(a.http()).header(a.header(),a.token()).contentType("application/json").content(json.writeValueAsBytes(p))).andExpect(status().isOk()).andReturn();long id=json.readTree(r.getResponse().getContentAsString()).at("/data/id").asLong();var u=login("citizen");mvc.perform(get("/api/products/"+id).session(u.http())).andExpect(status().isNotFound());p.put("status","PUBLISHED");p.put("revision",0);mvc.perform(put("/api/admin/products/"+id).session(a.http()).header(a.header(),a.token()).contentType("application/json").content(json.writeValueAsBytes(p))).andExpect(status().isOk());mvc.perform(get("/api/products/"+id).session(u.http())).andExpect(status().isOk());}
+}

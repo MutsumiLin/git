@@ -1,0 +1,122 @@
+{
+  "iteration": "Sprint 2",
+  "date": "2026-11-03",
+  "executor": "Codex辅助会话的实际工具运行；组员本人验收另填",
+  "mysql": {
+    "tests": 70,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "h2": {
+    "tests": 70,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontend": {
+    "unitTests": 5,
+    "failures": 0,
+    "build": "PASS"
+  },
+  "http": [
+    {
+      "name": "行程奖励为后续兑换提供真实积分",
+      "result": "PASS"
+    },
+    {
+      "name": "创建兑换同时扣分扣库存",
+      "result": "PASS"
+    },
+    {
+      "name": "重复兑换不再次扣分且内容冲突409",
+      "result": "PASS"
+    },
+    {
+      "name": "本人和本店范围由会话决定",
+      "result": "PASS"
+    },
+    {
+      "name": "重复取消只退一次积分恢复一次库存",
+      "result": "PASS"
+    },
+    {
+      "name": "商户重复核销不再次扣分且已核销不能取消",
+      "result": "PASS"
+    },
+    {
+      "name": "账本包含消费和退款",
+      "result": "PASS"
+    },
+    {
+      "name": "运营新规则发布后历史奖励保持",
+      "result": "PASS"
+    },
+    {
+      "name": "未交付的清算接口不返回成功",
+      "result": "PASS"
+    }
+  ],
+  "restart": [
+    {
+      "name": "重启保留余额订单库存和核销状态",
+      "result": "PASS"
+    },
+    {
+      "name": "重启后原兑换请求仍只返回原订单",
+      "result": "PASS"
+    }
+  ],
+  "upgradeFromSprint1": [
+    {
+      "name": "后端重启后行程与积分仍存在",
+      "result": "PASS"
+    },
+    {
+      "name": "后端重启后同编号仍然幂等",
+      "result": "PASS"
+    }
+  ],
+  "browser": {
+    "reports": [
+      {
+        "name": "市民兑换页面与订单状态真实连通",
+        "result": "PASS"
+      },
+      {
+        "name": "页面取消确认后退分并更新状态",
+        "result": "PASS"
+      },
+      {
+        "name": "已提交但响应丢失时原编号重试不重复扣分",
+        "result": "PASS"
+      },
+      {
+        "name": "商户工作台支持商品编辑并核销本店订单",
+        "result": "PASS"
+      },
+      {
+        "name": "运营新增草稿商品上架并发布规则",
+        "result": "PASS"
+      },
+      {
+        "name": "积分消费退回展示与手机布局",
+        "result": "PASS"
+      },
+      {
+        "name": "角色路由隔离与无页面脚本错误",
+        "result": "PASS"
+      }
+    ],
+    "errors": []
+  },
+  "uml": {
+    "sources": 5,
+    "images": 5,
+    "plantuml": "1.2026.9"
+  },
+  "githubActions": {
+    "configured": true,
+    "executedOnGithub": false
+  }
+}

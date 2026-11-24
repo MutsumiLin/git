@@ -1,0 +1,15 @@
+.github/workflows/verify.yml
+backend/src/test/java/edu/green/TestSupport.java
+backend/src/test/java/edu/green/integration/CommerceConcurrencyTest.java
+backend/src/test/java/edu/green/integration/CommerceRollbackTest.java
+backend/src/test/java/edu/green/integration/OperationsFlowTest.java
+deploy/SPRINT2_RUNBOOK.md
+docs/members/sprint2/F-files.txt
+docs/members/sprint2/F.md
+docs/team/FILE_OWNERSHIP.json
+docs/team/SPRINT2_CHANGESET.json
+docs/team/SPRINT2_GITHUB.md
+docs/testing/SPRINT2_TEST_PLAN.md
+docs/testing/SPRINT2_VERIFICATION.md
+docs/testing/sprint2-verification.json
+tests/sprint2-smoke.mjs
